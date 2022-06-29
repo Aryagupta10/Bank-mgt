@@ -1,0 +1,1189 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Cambria;}}
+{\*\generator Riched20 10.0.17134}\viewkind4\uc1 
+\pard\f0\fs34\lang1033\par
+#include<iostream.h>\par
+#include<conio.h>\par
+#include<fstream.h>\par
+#include<string.h>\par
+#include<stdio.h>\par
+#include<process.h>\par
+#include<dos.h>\par
+\par
+void main();\par
+void main1();\par
+void adminmode();\par
+void addemp();\par
+void searchemp();\par
+void showemp();\par
+void removeemp();\par
+void changeapass();\par
+void changedata();\par
+void openac();\par
+void changeepass();\par
+void findac();\par
+void editac();\par
+void passbook();\par
+void closeac();\par
+void transfer();\par
+void showbal();\par
+void changecpass();\par
+void showac();\par
+void changebal(int);\par
+\par
+class manager\par
+\{\par
+\tab char apass[7];\par
+\par
+public:\par
+\tab manager()\par
+\tab\{\par
+\tab\tab strcpy(apass,"123321");\par
+\tab\}\par
+\tab void getapass();\par
+\tab int mlogin();\par
+\}m;\par
+\par
+void manager::getapass()\par
+\{\par
+\tab cout<<"\\nEnter Password-";\par
+\tab for(int i=0;i<6;i++)\par
+\tab\{\par
+\tab\tab apass[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab apass[6]='\\0';\par
+\}\par
+\par
+int manager::mlogin()\par
+\{\par
+\tab clrscr();\par
+\tab char p[7];\par
+\tab cout<<"Enter Admin Password\\n";\par
+\tab for(int i=0;i<6;i++)\par
+\tab\{\par
+\tab\tab p[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab p[6]='\\0';\par
+\tab if(!strcmpi(p,apass))\par
+\tab\{\par
+\tab\tab cout<<"\\nACCESS GRANTED";\par
+\tab\tab getch();\par
+\tab\tab adminmode();\par
+\tab\}\par
+\tab else\par
+\tab\{\par
+\tab\tab cout<<"\\nACCESS DENIED";\par
+\tab\tab getch();\par
+\tab\tab main1();\par
+\tab\}\par
+\}\par
+class employee\par
+\{\par
+\tab char empid[20];\par
+\tab char adhaarno[13];\par
+\tab char name[20];\par
+\tab char desig[20];\par
+\tab float salary;\par
+\tab char epass[5];\par
+\par
+public:\par
+\par
+\tab void getdata();\par
+\tab void showdata();\par
+\tab void ldata(char a[],int);\par
+\tab int compid(char b[]);\par
+\tab int compdesg(char b[]);\par
+\tab int compname(char b[]);\par
+\tab int login();\par
+\par
+\}emp;\par
+\par
+void employee::getdata()\par
+\{\par
+\tab a:\par
+\tab float a;\par
+\tab cout<<"\\t\\t\\t  Employee Registration Form\\n\\n\\n\\n";\par
+\tab cout<<"Name of the employee - \\t\\t\\t\\tAdhaar no.-\\n\\n\\n";\par
+\tab cout<<"Salary - \\t\\t\\t\\t\\tDesignation - \\n" ;\par
+\tab gotoxy(wherex()+24,wherey()-4);\par
+\tab gets(name);\par
+\tab gotoxy(wherex()+60,wherey()-1);\par
+\tab for(int i=0;i<12;i++)\par
+\tab\{\par
+\tab\tab adhaarno[i]=getch();\par
+\tab\tab cout<<adhaarno[i];\par
+\tab\}\par
+\tab adhaarno[12]='\\0';\par
+\tab cout<<endl;\par
+\tab gotoxy(wherex()+24,wherey()+2);\par
+\tab cin>>a;\par
+\tab while(a<=0)\par
+\tab\{\par
+\tab\tab cout<<"\\nWrong Input!";\par
+\tab\tab getch();\par
+\tab\tab clrscr();\par
+\tab\tab goto a;\par
+\tab\}\par
+\tab salary=a;\par
+\tab gotoxy(wherex()+63,wherey()-1);\par
+\tab gets(desig);\par
+\}\par
+\par
+void employee::showdata()\par
+\{\par
+\tab cout<<name;\par
+\tab cout<<"\\t\\t";\par
+\tab cout<<empid;\par
+\tab cout<<"\\t\\t";\par
+\tab cout<<adhaarno;\par
+\tab cout<<"\\t";\par
+\tab cout<<salary;\par
+\tab cout<<"\\t\\t";\par
+\tab cout<<desig;\par
+\tab cout<<"\\n";\par
+\}\par
+\par
+void employee::ldata(char id[],int a=1)\par
+\{\par
+\tab if(a==1)\par
+\tab\tab strcpy(empid,id);\par
+\tab cout<<"\\nPlease choose a 4 digit password - ";\par
+\tab for(int i=0;i<4;i++)\par
+\tab\{\par
+\tab\tab epass[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab epass[4]='\\0';\par
+\}\par
+\par
+int employee::login()\par
+\{\par
+\tab char pin[5];\par
+\tab cout<<"Pin - " ;\par
+\tab for(int i=0;i<4;i++)\par
+\tab\{\par
+\tab\tab pin[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab pin[4]='\\0';\par
+\tab return strcmp(pin,epass);\par
+\}\par
+\par
+int employee::compid(char a[])\par
+\{\par
+\tab return strcmp(a,empid);\par
+\}\par
+\par
+int employee::compname(char a[])\par
+\{\par
+\tab return strcmp(a,name);\par
+\}\par
+\par
+int employee::compdesg(char a[])\par
+\{\par
+\tab return strcmp(a,desig);\par
+\}\par
+\par
+\par
+\par
+class customer\par
+\{\par
+\tab long acno;\par
+\tab char actype;\par
+\tab char name[20];\par
+\tab char adhaarno[13];\par
+\tab long balance;\par
+\tab char pass[5];\par
+\tab float pb[90];\par
+\tab char pbook[90];\par
+\tab int count;\par
+\par
+public:\par
+\tab long retbal();\par
+\tab void getdata(long,char,int);\par
+\tab void showdata();\par
+\tab int login();\par
+\tab long accno();\par
+\tab int compname(char a[]);\par
+\tab void passbook();\par
+\tab void getnewpass();\par
+\tab void deposit(long);\par
+\tab void withdraw(long);\par
+\par
+\}cust;\par
+\par
+\par
+long customer::retbal()\par
+\{\par
+\tab return balance ;\par
+\}\par
+\par
+\par
+void customer::getdata(long ac,char a,int f=1)\par
+\{\par
+\tab long amount;\par
+\tab if(f==1)\par
+\tab\{\par
+\tab\tab acno=ac;\par
+\tab\tab actype=a;\par
+\tab\}\par
+\tab b:\par
+\tab cout<<"\\t\\t\\t  Customer Registration Form\\n\\n\\n\\n";\par
+\tab cout<<"Name of the customer - \\t\\t\\t\\tAdhaar no.-\\n\\n\\n";\par
+\tab cout<<"Amount - \\t\\t\\t\\t\\tPassword - \\n" ;\par
+\tab gotoxy(wherex()+24,wherey()-4);\par
+\tab gets(name);\par
+\tab gotoxy(wherex()+60,wherey()-1);\par
+\tab for(int j=0;j<12;j++)\par
+\tab\{\par
+\tab\tab adhaarno[j]=getch();\par
+\tab\tab cout<<adhaarno[j];\par
+\tab\}\par
+\tab adhaarno[12]='\\0';\par
+\tab cout<<endl;\par
+\tab gotoxy(wherex()+10,wherey()+2);\par
+\tab cin>>amount;\par
+\tab while(actype=='C'&&amount<5000 || actype=='S'&&amount<2000)\par
+\tab\{\par
+\tab\tab cout<<"\\nWrong Input!";\par
+\tab\tab getch();\par
+\tab\tab clrscr();\par
+\tab\tab goto b;\par
+\tab\}\par
+\tab balance=amount;\par
+\tab pb[0]=balance;\par
+\tab count=1;\par
+\tab pbook[0]='d';\par
+\tab gotoxy(wherex()+60,wherey()-1);\par
+\tab for(int i=0;i<4;i++)\par
+\tab\{\par
+\tab\tab pass[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab pass[4]='\\0';\par
+\par
+\}\par
+\par
+void customer::showdata()\par
+\{\par
+\tab cout<<acno;\par
+\tab cout<<"\\t\\t\\t";\par
+\tab cout<<name;\par
+\tab cout<<"\\t\\t";\par
+\tab cout<<adhaarno;\par
+\tab cout<<"\\t\\t";\par
+\tab cout<<balance;\par
+\tab cout<<"\\n";\par
+\}\par
+\par
+int customer::login()\par
+\{\par
+\tab char pin[5];\par
+\tab cout<<"\\n\\nPin - ";\par
+\tab for(int i=0;i<4;i++)\par
+\tab\{\par
+\tab\tab pin[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab pin[4]='\\0';\par
+\tab return strcmp(pin,pass);\par
+\}\par
+\par
+void customer::getnewpass()\par
+\{\par
+\tab cout<<"\\n\\nPin - ";\par
+\tab for(int i=0;i<4;i++)\par
+\tab\{\par
+\tab\tab pass[i]=getch();\par
+\tab\tab cout<<"*";\par
+\tab\}\par
+\tab pass[4]='\\0';\par
+\}\par
+\par
+void customer::deposit(long amount)\par
+\{\par
+\tab int y;\par
+\tab balance=balance+amount;\par
+\tab pb[count]=amount;\par
+\tab count++;\par
+\tab y=strlen(pbook);\par
+\tab pbook[y]='d';\par
+\tab pbook[y+1]='\\0';\par
+\par
+\}\par
+\par
+void customer::withdraw(long amount)\par
+\{\par
+\tab int y;\par
+\tab balance=balance-amount;\par
+\tab pb[count]=amount;\par
+\tab count++;\par
+\tab y=strlen(pbook);\par
+\tab pbook[y]='w';\par
+\tab pbook[y+1]='\\0';\par
+\}\par
+\par
+long customer::accno()\par
+\{\par
+\tab return acno;\par
+\}\par
+\par
+int customer::compname(char a[])\par
+\{\par
+\tab return strcmpi(a,name);\par
+\}\par
+\par
+void customer::passbook()\par
+\{\par
+\tab int x,y;\par
+\tab cout<<endl;\par
+\tab for(int i=0;i<count;i++)\par
+\tab\{\par
+\tab\tab if(pbook[i]=='d')\par
+\tab\tab\{\par
+\tab\tab       cout<<pb[i]<<endl;\par
+\tab\tab\}\par
+\tab\tab if(pbook[i]=='w')\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\t\\t\\t"<<pb[i]<<endl;\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+//1. Admin Mode and its functions\par
+\par
+void adminmode()\par
+\{\par
+\tab while(1)\par
+\tab\{\par
+\tab\tab clrscr();\par
+\tab\tab int choice;\par
+\tab\tab cout<<"\\t\\t\\t\\tWelcome to XYZ Bank (Admin Mode)\\n\\n\\n\\n";\par
+\tab\tab cout<<"Please choose the program mode\\n";\par
+\tab\tab cout<<"1.) Add Employee \\n2.) search Employee \\n3.) Show Employee \\n4.) Remove Employee \\n5.) Modify Employee Data\\n6.) Change Admin Password \\n7.) Logout \\n8.) Exit\\n\\n";\par
+\tab\tab cin>>choice;\par
+\tab\tab switch(choice)\par
+\tab\tab\{\par
+\tab\tab\tab case 1: addemp();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 2: searchemp();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 3: showemp();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 4:\tab removeemp();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 5: changedata();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 6: changeapass();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 7: main1();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 8: exit(0);\par
+\par
+\tab\tab\tab default: cout<<"\\nWrong Choice!\\n";\par
+\tab\tab\tab\tab  getch();\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+void addemp()\par
+\{\par
+\tab f:\par
+\tab char id[20];\par
+\tab ifstream fin;\par
+\tab ofstream fout;\par
+\tab clrscr();\par
+\tab cout<<"Chose an user id - ";\par
+\tab gotoxy(wherex()+20,wherey()-1);\par
+\tab gets(id);\par
+\tab fin.open("employee.dat",ios::binary);\par
+\tab while(fin.read((char*)&emp,sizeof(emp)))\par
+\tab\{\par
+\tab\tab if(!emp.compid(id))\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\nId already exist";\par
+\tab\tab\tab getch();\par
+\tab\tab\tab fin.close();\par
+\tab\tab\tab goto f;\par
+\tab\tab\}\par
+\tab\}\par
+\tab emp.ldata(id);\par
+\tab clrscr();\par
+\tab emp.getdata();\par
+\tab fin.close();\par
+\tab fout.open("employee.dat",ios::binary|ios::app);\par
+\tab fout.write((char*)&emp,sizeof(emp));\par
+\tab cout<<"\\n\\nEmployee added successfully";\par
+\tab fout.close();\par
+\tab getch();\par
+\}\par
+\par
+void searchemp()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab int flag=0;\par
+\tab char id[20];\par
+\tab cout<<"\\t\\t\\tSearch Employee\\n\\n";\par
+\tab cout<<"Enter the Employee ID - ";\par
+\tab gets(id);\par
+\tab cout<<"\\n\\nName\\t\\tUser ID\\t\\tAdhaar no.\\tSalary\\t   Designation\\n";\par
+\tab cout<<"_______________________________________________________________________\\n\\n";\par
+\tab f.open("employee.dat",ios::binary|ios::in|ios::out);\par
+\tab while(f.read((char*)&emp,sizeof(emp)))\par
+\tab\{\par
+\tab\tab if(!emp.compid(id))\par
+\tab\tab\{\par
+\tab\tab\tab emp.showdata();\par
+\tab\tab\tab flag=1;\par
+\tab\tab\}\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\tab cout<<"\\nNo Record Found!!";\par
+\tab f.close();\par
+\tab getch();\par
+\}\par
+\par
+void showemp()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab int flag=0;\par
+\tab cout<<"\\t\\t\\t\\tEmployee Details";\par
+\tab cout<<"\\n\\nName\\t\\tUser Id\\t\\tAdhaar no.\\tSalary\\t   Designation\\n";\par
+\tab cout<<"_______________________________________________________________________\\n\\n";\par
+\tab f.open("employee.dat",ios::binary|ios::in);\par
+\tab while(f.read((char*)&emp,sizeof(emp)))\par
+\tab\{\par
+\tab\tab emp.showdata();\par
+\tab\tab flag=1;\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\tab cout<<"\\nNo Record Found!!";\par
+\tab f.close();\par
+\tab getch();\par
+\}\par
+\par
+void removeemp()\par
+\{\par
+\tab clrscr();\par
+\tab ifstream fin;\par
+\tab fin.open("employee.dat",ios::binary);\par
+\tab ofstream fout;\par
+\tab fout.open("temp.dat",ios::binary);\par
+\tab int f=0;\par
+\tab char a[20];\par
+\tab cout<<"\\t\\t\\t Delete Employee";\par
+\tab cout<<"\\n\\nEnter the employee user id -  ";\par
+\tab gets(a);\par
+\tab while(fin.read((char*)&emp,sizeof(emp)))\par
+\tab\{\par
+\tab\tab if(emp.compid(a))\par
+\tab\tab\tab fout.write((char*)&emp,sizeof(emp));\par
+\tab\tab else\par
+\tab\tab\tab f=1;\par
+\tab\}\par
+\tab fin.close();\par
+\tab fout.close();\par
+\tab remove("employee.dat");\par
+\tab rename("temp.dat","employee.dat");\par
+\tab if(f==0)\par
+\tab\tab cout<<"\\n\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\n\\nRecord Deleted Successfully!";\par
+\tab getch();\par
+\par
+\}\par
+\par
+void changeapass()\par
+\{\par
+\tab clrscr();\par
+\tab m.getapass();\par
+\tab cout<<"\\n\\nPassword Changed Successfully";\par
+\tab getch();\par
+\}\par
+\par
+void changedata()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab f.open("employee.dat",ios::binary|ios::in|ios::out);\par
+\tab char a[20];\par
+\tab int pos,f1=0;\par
+\tab cout<<"\\t\\t\\t Modify Employee data\\n\\n";\par
+\tab cout<<"Enter the employee id - ";\par
+\tab gets(a);\par
+\tab clrscr();\par
+\tab while(!f.eof())\par
+\tab\{       pos=f.tellg();\par
+\tab\tab f.read((char*)&emp,sizeof(emp));\par
+\tab\tab if(!emp.compid(a))\par
+\tab\tab\{\par
+\tab\tab\tab emp.getdata();\par
+\tab\tab\tab f.seekg(pos);\par
+\tab\tab\tab f.write((char*)&emp,sizeof(emp));\par
+\tab\tab\tab f1=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab f.close();\par
+\tab if(f1==0)\par
+\tab\tab cout<<"\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\nRecord Updated Successfully!";\par
+\tab getch();\par
+\par
+\}\par
+\par
+\par
+\par
+//2. Employee Mode and its functions\par
+\par
+void elogin()\par
+\{\par
+\tab clrscr();\par
+\tab ifstream fin;\par
+\tab int flag1=0,flag2=0,flag3=0;\par
+\tab char a[20];\par
+\tab fin.open("employee.dat",ios::binary);\par
+\tab while(fin.read((char*)&emp,sizeof(emp)))\par
+\tab\{\par
+\tab\tab if(!flag3==1)\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\nUser Id - ";\par
+\tab\tab\tab gets(a);\par
+\tab\tab\}\par
+\tab\tab flag3=1;\par
+\tab\tab if(!emp.compid(a))\par
+\tab\tab\{\par
+\tab\tab\tab flag2=1;\par
+\tab\tab\tab if(!emp.login())\par
+\tab\tab\tab\{\par
+\tab\tab\tab\tab flag1=1;\par
+\tab\tab\tab\tab break;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\}\par
+\tab fin.close();\par
+\tab if(flag3==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo Record found!";\par
+\tab\tab cout<<"\\nPlease add a customer from employee mode";\par
+\tab\tab getch();\par
+\tab\tab main1();\par
+\tab\}\par
+\tab else if(flag2==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo user found!";\par
+\tab\tab getch();\par
+\tab\tab elogin();\par
+\tab\}\par
+\tab else if(flag1==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nWrong Password!";\par
+\tab\tab getch();\par
+\tab\tab elogin();\par
+\tab\}\par
+\par
+\}\par
+\par
+void empmode()\par
+\{\par
+\tab elogin();\par
+\tab while(1)\par
+\tab\{\par
+\tab\tab clrscr();\par
+\tab\tab int choice;\par
+\tab\tab cout<<"\\t\\t\\t\\tWelcome to XYZ Bank (Employee Mode)\\n\\n\\n\\n";\par
+\tab\tab cout<<"Please choose the program mode\\n";\par
+\tab\tab cout<<"1.) Open Account \\n2.) search Account \\n3.) Show Account \\n4.) Deposit \\n5.) Withdrawl\\n6.) Modify Account \\n7.) Close Account \\n8.) Change Password \\n9.) Logout\\n10.) Exit\\n\\n";\par
+\tab\tab cin>>choice;\par
+\tab\tab switch(choice)\par
+\tab\tab\{\par
+\tab\tab\tab case 1: openac();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 2: findac();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 3: showac();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 4: changebal(1);\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 5: changebal(2);\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 6: editac();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 7: closeac();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 8: changeepass();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 9: main1();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 10: exit(0);\par
+\par
+\tab\tab\tab default: cout<<"\\nWrong Choice\\n";\par
+\tab\tab\tab\tab  getch();\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+void openac()\par
+\{\par
+\tab clrscr();\par
+\tab int flag=0,choice;\par
+\tab long ac;\par
+\tab ifstream fin;\par
+\tab fin.open("customer.dat",ios::binary);\par
+\tab while(fin.read((char*)&cust,sizeof(cust)))\par
+\tab\{\par
+\tab\tab flag=1;\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\{\par
+\tab\tab ac=10000;\par
+\tab\}\par
+\tab else\par
+\tab\{\par
+\tab\tab ac=cust.accno()+1;\par
+\tab\}\par
+\tab fin.close();\par
+\tab cout<<"Enter the account type\\n\\n1.) Current (Mininmum Deposit 5000)\\n2.) Saving (Minimum Deposit 2000)\\n\\n";\par
+\tab cin>>choice;\par
+\tab switch(choice)\par
+\tab\{\par
+\tab\tab case 1: clrscr();\par
+\tab\tab\tab cust.getdata(ac,'C');\par
+\tab\tab\tab break;\par
+\par
+\tab\tab case 2: clrscr();\par
+\tab\tab\tab cust.getdata(ac,'S');\par
+\tab\tab\tab break;\par
+\par
+\tab\tab default: cout<<"Wrong Choice!";\par
+\tab\tab\tab  openac();\par
+\tab\}\par
+\par
+\tab ofstream fout;\par
+\tab fout.open("customer.dat",ios::binary|ios::app);\par
+\tab fout.write((char*)&cust,sizeof(cust));\par
+\tab fout.close();\par
+\tab cout<<"\\n\\nYour Account Number - "<<ac;\par
+\tab cout<<"\\n\\nAccount Created successfully!";\par
+\tab getch();\par
+\}\par
+\par
+void showac()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab int flag=0;\par
+\tab cout<<"\\t\\t\\t\\tCustomer Details";\par
+\tab cout<<"\\n\\nAccount No.\\t\\tName\\t\\tAdhaar no.\\t     Balance\\n";\par
+\tab cout<<"_______________________________________________________________________\\n\\n";\par
+\tab f.open("customer.dat",ios::binary|ios::in|ios::out);\par
+\tab while(f.read((char*)&cust,sizeof(cust)))\par
+\tab\{\par
+\tab\tab cust.showdata();\par
+\tab\tab flag=1;\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\tab cout<<"\\nNo Record Found!!";\par
+\tab f.close();\par
+\tab getch();\par
+\}\par
+\par
+void findac()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab int choice;\par
+\tab float ac;\par
+\tab int flag=0;\par
+\tab char a[20];\par
+\tab cout<<"\\t\\t\\tSearch Employee\\n\\n1.) Using Account No.\\n2.) Using Name\\n";\par
+\tab cin>>choice;\par
+\tab cout<<"Enter the search keyword - ";\par
+\tab if(choice==1)\par
+\tab\tab cin>>ac;\par
+\tab else if(choice==2)\par
+\tab\tab gets(a);\par
+\tab else\par
+\tab\tab findac();\par
+\par
+\tab cout<<"\\n\\nAccount No.\\t\\tName\\t\\tAdhaar no.\\tBalance\\n";\par
+\tab cout<<"_______________________________________________________________________\\n\\n";\par
+\tab f.open("customer.dat",ios::binary|ios::in|ios::out);\par
+\tab while(f.read((char*)&cust,sizeof(cust)))\par
+\tab\{\par
+\tab\tab if(choice==1&&ac==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab cust.showdata();\par
+\tab\tab\tab flag=1;\par
+\tab\tab\}\par
+\tab\tab else if(choice==2&&!cust.compname(a))\par
+\tab\tab\{\par
+\tab\tab\tab cust.showdata();\par
+\tab\tab\tab flag=1;\par
+\tab\tab\}\par
+\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\tab cout<<"\\nNo Record Found!!";\par
+\tab f.close();\par
+\tab getch();\par
+\}\par
+\par
+void editac()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab f.open("customer.dat",ios::binary|ios::in|ios::out);\par
+\tab float ac;\par
+\tab int pos,f1=0;\par
+\tab cout<<"\\t\\t\\t Modify Employee data\\n\\n";\par
+\tab cout<<"Enter the account no. - ";\par
+\tab cin>>ac;\par
+\tab clrscr();\par
+\tab while(!f.eof())\par
+\tab\{       pos=f.tellg();\par
+\tab\tab f.read((char*)&cust,sizeof(cust));\par
+\tab\tab if(ac==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab cust.getdata(32,'a',2);\par
+\tab\tab\tab f.seekg(pos);\par
+\tab\tab\tab f.write((char*)&cust,sizeof(cust));\par
+\tab\tab\tab f1=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab f.close();\par
+\tab if(f1==0)\par
+\tab\tab cout<<"\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\nRecord Updated Successfully!";\par
+\tab getch();\par
+\par
+\}\par
+\par
+void changeepass()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab f.open("employee.dat",ios::binary|ios::in|ios::out);\par
+\tab char a[20];\par
+\tab int pos,f1=0;\par
+\tab cout<<"\\t\\t\\t Change Employee Password\\n\\n";\par
+\tab cout<<"Enter the employee id - ";\par
+\tab gets(a);\par
+\tab while(!f.eof())\par
+\tab\{       pos=f.tellg();\par
+\tab\tab f.read((char*)&emp,sizeof(emp));\par
+\tab\tab if(!emp.compid(a))\par
+\tab\tab\{\par
+\tab\tab\tab emp.ldata("abc",2);\par
+\tab\tab\tab f.seekg(pos);\par
+\tab\tab\tab f.write((char*)&emp,sizeof(emp));\par
+\tab\tab\tab f1=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab f.close();\par
+\tab if(f1==0)\par
+\tab\tab cout<<"\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\nPassword Changed Successfully!";\par
+\tab getch();\par
+\par
+\par
+\}\par
+\par
+void closeac()\par
+\{\par
+\tab clrscr();\par
+\tab ifstream fin;\par
+\tab fin.open("customer.dat",ios::binary);\par
+\tab ofstream fout;\par
+\tab fout.open("temp.dat",ios::binary);\par
+\tab int flag=0;\par
+\tab long ac;\par
+\tab cout<<"\\t\\t\\t Delete Customer";\par
+\tab cout<<"\\n\\nEnter the Customer account no. -  ";\par
+\tab cin>>ac;\par
+\tab while(fin.read((char*)&cust,sizeof(cust)))\par
+\tab\{\par
+\tab\tab if(ac==cust.accno())\par
+\tab\tab\tab fout.write((char*)&cust,sizeof(cust));\par
+\tab\tab else\par
+\tab\tab\tab flag=1;\par
+\tab\}\par
+\tab fin.close();\par
+\tab fout.close();\par
+\tab remove("customer.dat");\par
+\tab rename("temp.dat","customer.dat");\par
+\tab if(flag==0)\par
+\tab\tab cout<<"\\n\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\n\\nRecord Deleted Successfully!";\par
+\tab getch();\par
+\par
+\}\par
+\par
+void changebal(int a)\par
+\{\par
+\tab fstream f;\par
+\tab int pos,flag=0;\par
+\tab long ac,amount;\par
+\tab b:\par
+\tab clrscr();\par
+\tab f.open("customer.dat",ios::binary|ios::in|ios::out);\par
+\tab cout<<"Enter account no. - ";\par
+\tab cin>>ac;\par
+\tab while(!f.eof())\par
+\tab\{\par
+\tab\tab pos=f.tellg();\par
+\tab\tab f.read((char*)&cust,sizeof(cust));\par
+\tab\tab if(ac==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab flag=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo account found";\par
+\tab\tab getch();\par
+\tab\tab goto b;\par
+\tab\}\par
+\tab if(a==1)\par
+\tab\{\par
+\tab\tab clrscr();\par
+\tab\tab cout<<"\\t\\t\\t\\t\\tDeposit\\n\\n";\par
+\tab\tab cout<<"Amount - ";\par
+\tab\tab cin>>amount;\par
+\tab\tab cust.deposit(amount);\par
+\tab\tab f.seekp(pos);\par
+\tab\tab f.write((char*)&cust,sizeof(cust));\par
+\tab\tab f.close();\par
+\tab\tab cout<<"\\n\\nBalance updated successfully";\par
+\tab\tab getch();\par
+\par
+\tab\}\par
+\tab if(a==2)\par
+\tab\{\par
+\tab\tab clrscr();\par
+\tab\tab cout<<"\\t\\t\\t\\t\\tWithdraw\\n\\n";\par
+\tab\tab cout<<"Amount - ";\par
+\tab\tab cin>>amount;\par
+\tab\tab if(amount<=cust.retbal()-1000)\par
+\tab\tab\{\par
+\tab\tab\tab cust.withdraw(amount);\par
+\tab\tab\tab f.seekp(pos);\par
+\tab\tab\tab f.write((char*)&cust,sizeof(cust));\par
+\tab\tab\tab f.close();\par
+\tab\tab\tab cout<<"\\n\\nBalance updated successfully";\par
+\tab\tab\tab getch();\par
+\tab\tab\}\par
+\tab\tab else\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\nYour account do not have sufficient balance";\par
+\tab\tab\tab getch();\par
+\tab\tab\tab f.close();\par
+\tab\tab\tab changebal(2);\par
+\tab\tab\}\par
+\tab\}\par
+\}\par
+\par
+//3. Customer Mode and its functions\par
+\par
+void clogin()\par
+\{\par
+\tab clrscr();\par
+\tab ifstream fin;\par
+\tab int flag1=0,flag2=0,flag3=0;\par
+\tab long a;\par
+\tab fin.open("customer.dat",ios::binary);\par
+\tab while(fin.read((char*)&cust,sizeof(cust)))\par
+\tab\{\par
+\tab\tab if(!flag3==1)\par
+\tab\tab\{\par
+\tab\tab\tab cout<<"\\nAccount no. - ";\par
+\tab\tab\tab cin>>a;\par
+\tab\tab\}\par
+\tab\tab flag3=1;\par
+\tab\tab if(a==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab flag2=1;\par
+\tab\tab\tab if(!cust.login())\par
+\tab\tab\tab\{\par
+\tab\tab\tab\tab flag1=1;\par
+\tab\tab\tab\tab break;\par
+\tab\tab\tab\}\par
+\tab\tab\}\par
+\tab\}\par
+\tab fin.close();\par
+\tab if(flag3==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo Record found!";\par
+\tab\tab cout<<"\\nPlease add a customer from admin mode";\par
+\tab\tab getch();\par
+\tab\tab main1();\par
+\tab\}\par
+\tab else if(flag2==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo user found!";\par
+\tab\tab getch();\par
+\tab\tab clogin();\par
+\tab\}\par
+\tab else if(flag1==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nWrong Password!";\par
+\tab\tab getch();\par
+\tab\tab clogin();\par
+\tab\}\par
+\par
+\}\par
+\par
+void custmode()\par
+\{\par
+\tab clogin();\par
+\tab while(1)\par
+\tab\{\par
+\tab\tab clrscr();\par
+\tab\tab int choice;\par
+\tab\tab cout<<"\\t\\t\\t\\tWelcome to XYZ Bank (Employee Mode)\\n\\n\\n\\n";\par
+\tab\tab cout<<"Please choose the program mode\\n";\par
+\tab\tab cout<<"1.) Transfer Amount \\n2.) Passbook \\n3.) Show Balance \\n4.) Change Password \\n5.) Logout\\n6.) Exit\\n\\n";\par
+\tab\tab cin>>choice;\par
+\tab\tab switch(choice)\par
+\tab\tab\{\par
+\tab\tab\tab case 1: transfer();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 2: passbook();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 3: showbal();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 4: changecpass();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 5: main1();\par
+\tab\tab\tab\tab break;\par
+\par
+\tab\tab\tab case 6: exit(0);\par
+\par
+\tab\tab\tab default: cout<<"\\nWrong Choice\\n";\par
+\tab\tab\tab\tab  getch();\par
+\tab\tab\}\par
+\tab\}\par
+\par
+\}\par
+\par
+void transfer()\par
+\{\par
+\tab clrscr();\par
+\tab long ac1,ac2,amount;\par
+\tab int flag=0,pos;\par
+\tab ac1=cust.accno();\par
+\tab cout<<"\\t\\t\\t\\tInter Bank Transfer\\n";\par
+\tab cout<<"\\nAmount - ";\par
+\tab cin>>amount;\par
+\tab if(amount<=cust.retbal())\par
+\tab\{\par
+\tab\tab cout<<"\\n\\nEnter account no - ";\par
+\tab\tab cin>>ac2;\par
+\tab\}\par
+\tab else\par
+\tab\{\par
+\tab\tab cout<<"\\nInsufficient Funds!" ;\par
+\tab\tab getch();\par
+\tab\tab transfer();\par
+\tab\}\par
+\tab fstream f;\par
+\tab f.open("customer.dat",ios::binary|ios::in);\par
+\tab while(!f.eof())\par
+\tab\{\par
+\tab\tab pos=f.tellg();\par
+\tab\tab f.read((char*)&cust,sizeof(cust));\par
+\tab\tab if(ac2==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab flag=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab if(flag==0)\par
+\tab\{\par
+\tab\tab cout<<"\\nNo account found!";\par
+\tab\tab getch();\par
+\tab\tab f.close();\par
+\tab\tab transfer();\par
+\tab\}\par
+\tab else\par
+\tab\{\par
+\tab\tab cust.deposit(amount);\par
+\tab\tab f.seekp(pos);\par
+\tab\tab f.write((char*)&cust,sizeof(cust));\par
+\tab\tab cout<<"\\nTransferred Successfully!";\par
+\tab\tab getch();\par
+\tab\tab f.close();\par
+\par
+\tab\}\par
+\tab f.open("customer.dat",ios::binary|ios::in);\par
+\tab while(!f.eof())\par
+\tab\{\par
+\tab\tab pos=f.tellg();\par
+\tab\tab f.read((char*)&cust,sizeof(cust));\par
+\tab\tab if(ac1==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab cust.withdraw(amount);\par
+\tab f.seekp(pos);\par
+\tab f.write((char*)&cust,sizeof(cust));\par
+\tab f.close();\par
+\par
+\}\par
+\par
+void passbook()\par
+\{\par
+\tab clrscr();\par
+\tab cout<<"\\t\\t\\t\\tPassbook\\n\\n\\n";\par
+\tab cout<<"Deposit\\t\\t\\tWithdraw\\n";\par
+\tab cout<<"____________________________________________________________";\par
+\tab cust.passbook();\par
+\tab getch();\par
+\}\par
+\par
+void showbal()\par
+\{\par
+\tab clrscr();\par
+\tab cout<<"\\n Balance - "<<cust.retbal();\par
+\tab getch();\par
+\par
+\}\par
+\par
+void changecpass()\par
+\{\par
+\tab clrscr();\par
+\tab fstream f;\par
+\tab f.open("customer.dat",ios::binary|ios::in|ios::app|ios::out);\par
+\tab long ac;\par
+\tab int pos,f1=0;\par
+\tab cout<<"\\t\\t\\t Change Customer Password\\n\\n";\par
+\tab cout<<"Enter the account no. - ";\par
+\tab cin>>ac;\par
+\tab while(!f.eof())\par
+\tab\{       pos=f.tellg();\par
+\tab\tab f.read((char*)&cust,sizeof(cust));\par
+\tab\tab if(ac==cust.accno())\par
+\tab\tab\{\par
+\tab\tab\tab cust.getnewpass();\par
+\tab\tab\tab f.seekg(pos);\par
+\tab\tab\tab f.write((char*)&cust,sizeof(cust));\par
+\tab\tab\tab f1=1;\par
+\tab\tab\tab break;\par
+\tab\tab\}\par
+\tab\}\par
+\tab f.close();\par
+\tab if(f1==0)\par
+\tab\tab cout<<"\\nRecord not found!";\par
+\tab else\par
+\tab\tab cout<<"\\nPassword Changed Successfully!";\par
+\tab getch();\par
+\par
+\par
+\par
+\}\par
+\par
+//Intro\par
+\par
+void intro()\par
+\{\par
+\tab clrscr();\par
+\tab cout<<"\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\t\\t\\t    ";\par
+\tab char intro1[]=\{"COMPUTER SCIENCE PROJECT"\};  //array storing name of project\par
+\tab for(int i=0;intro1[i]!='\\0';i++)\par
+\tab\{\par
+\tab\tab cout<<intro1[i];\par
+\tab\tab delay(50);\par
+\tab\}\par
+\tab delay(500);\par
+\tab clrscr();\par
+\tab cout<<"\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\t\\t\\t    ";\par
+\tab char intro2[]=\{"BANK MANAGEMENT PROJECT \\n\\t\\t\\t    MADE BY -Arya Gupta \\n\\t\\t\\t\\t     and\\n\\t\\t\\t\\t     Tripti Singh\\n \\t\\t\\t    Class:XII-B"\};\par
+\tab for(i=0;intro2[i]!='\\0';i++)         //array storing our name\par
+\tab\{\par
+\tab\tab cout<<intro2[i];\par
+\tab\tab delay(50);\par
+\tab\}\par
+\tab delay(500);\par
+\tab getch();\par
+\tab clrscr();\par
+\tab cout<<"\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\t\\t\\t    ";\par
+\tab char intro3[]=\{"WELCOME TO XYZ BANK"\};   //array storing name of bank\par
+\tab for(i=0;intro3[i]!='\\0';i++)\par
+\tab\{\par
+\tab\tab cout<<intro3[i];\par
+\tab\tab delay(50);\par
+\tab\}\par
+\tab delay(500);\par
+\tab getch();\par
+\tab clrscr();\par
+\}\par
+\par
+\par
+\par
+void main1()\par
+\{\par
+\tab clrscr();\par
+\tab int choice;\par
+\tab cout<<"\\t\\t\\t\\tWelcome to XYZ bank\\n\\n\\n\\n";\par
+\tab cout<<"Please choose the program mode\\n";\par
+\tab cout<<"1.) Administration Mode \\n2.) Employee Mode \\n3.) Customer Mode \\n4.) Exit\\n\\n";\par
+\tab cin>>choice;\par
+\tab switch(choice)\par
+\tab\{\par
+\tab\tab case 1:\tab m.mlogin();\par
+\tab\tab\tab adminmode();\par
+\tab\tab\tab break;\par
+\par
+\tab\tab case 2: empmode();\par
+\tab\tab\tab break;\par
+\par
+\tab\tab case 3: custmode();\par
+\tab\tab\tab break;\par
+\par
+\tab\tab case 4: exit(0);\par
+\par
+\tab\tab default: cout<<"\\nWrong Choice";\par
+\tab\tab\tab  getch();\par
+\tab\tab\tab  main1();\par
+\tab\}\par
+\}\par
+\par
+void main()\par
+\{\par
+  //\tab intro();\par
+\tab main1();\par
+\}\par
+}
+ 
